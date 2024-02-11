@@ -26,7 +26,7 @@ class PlayList {
 
     /** Method to get a track by index */
     public Track getTrack(int index) {
-        if (index >= 0 && index < size) {
+        if (index >= 0 && index < maxSize) {
             return tracks[index];
         } else {
             return null;
@@ -63,6 +63,10 @@ class PlayList {
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
+        if(size == 0) {
+            return;
+        }
+
         for(int i = tracks.length - 1; i >= 0; i--) {
             if(tracks[i] != null) {
                 tracks[i] = null;
@@ -125,16 +129,24 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) { // arad
-        if(i < 0 || i > maxSize || size ==0) {
+        if(i < 0 || i > maxSize || size == 0) {
             return;
-        } // arad
+        }
+
+        if(tracks[i] != null){
+            tracks[i] = null;
+        }
     }
 
     /** Removes the first track that has the given title from this list.
      *  If such a track is not found, or the list is empty, or the given index
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) { // arad
-        //// replace this comment with your code
+        for(int i = 0; i < maxSize; i++) {
+            if(tracks[i].getTitle().equals(title)) {
+                tracks[i] = null;
+            }
+        }
     }
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
