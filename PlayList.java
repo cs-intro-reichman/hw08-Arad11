@@ -1,3 +1,5 @@
+import javax.xml.parsers.FactoryConfigurationError;
+
 /** Represnts a list of musical tracks. The list has a maximum capacity (int),
  *  and an actual size (number of tracks in the list, an int). */
 class PlayList {
@@ -35,32 +37,64 @@ class PlayList {
      *  If the list is full, does nothing and returns false.
      *  Otherwise, appends the track and returns true. */
     public boolean add(Track track) {
-        //// replace the following statement with your code
-        return true;
+        for (int i = 0; i < tracks.length; i++) {
+            if (tracks[i] != null) {
+                tracks[i] = track;
+                size++;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /** Returns the data of this list, as a string. Each track appears in a separate line. */
     //// For an efficient implementation, use StringBuilder.
     public String toString() {
-        //// replace the following statement with your code
-        return "";
+        String newStr = "";
+        for (int i = 0; i < tracks.length; i++) {
+            if (tracks[i] != null) {
+                newStr += tracks[i].toString() + "\r";
+            }
+        }
+
+        return newStr;
     }
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
-        //// replace this comment with your code
+        for(int i = tracks.length - 1; i >= 0; i--) {
+            if(tracks[i] != null) {
+                tracks[i] = null;
+                size--;
+                return;
+            }
+        }
     }
     
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
-        //// replace the following statement with your code
-        return 0;
+        int total = 0;
+        for(int i = 0; i < tracks.length; i++) {
+            if(tracks[i] != null) {
+                total += tracks[i].getDuration();
+            }
+        }
+
+        return total;
     }
 
     /** Returns the index of the track with the given title in this list.
      *  If such a track is not found, returns -1. */
     public int indexOf(String title) {
-        //// replace the following statement with your code
+        for(int i = 0; i< tracks.length; i++) {
+            if(tracks[i] != null) {
+                if (tracks[i].getTitle().equals(title)) {
+                    return i;
+                }
+            }
+        }
+        
         return -1;
     }
 
@@ -71,7 +105,13 @@ class PlayList {
      *  is full, does nothing and returns false. Otherwise, inserts the track and
      *  returns true. */
     public boolean add(int i, Track track) {
-        //// replace the following statement with your code
+        if(i < 0 || i > tracks.length) {
+            return false;
+        }
+        
+        for(int j = tracks.length - 2; j >= i; j++) {
+
+        }
         return false;
     }
      
