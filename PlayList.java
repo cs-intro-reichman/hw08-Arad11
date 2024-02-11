@@ -54,7 +54,8 @@ class PlayList {
         String newStr = "";
         for (int i = 0; i < tracks.length; i++) {
             if (tracks[i] != null) {
-                newStr += tracks[i].toString() + "\r";
+                String a = tracks[i].toString();
+                newStr = newStr + tracks[i].toString() + "\n";
             }
         }
 
