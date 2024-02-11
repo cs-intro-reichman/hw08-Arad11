@@ -119,8 +119,24 @@ class PlayList {
             }
         }
         
-        for(int j = tracks.length - 2; j >= i; j++) {
-                //arad
+        boolean room = false;
+        for(int j = i; j < maxSize; j++) {
+            if(tracks[j] == null) {
+                room = true;
+            }
+        }
+
+        if (room) {
+            for(int j = tracks.length - 2; j >= i; j++) {
+                if(tracks[j] != null) {
+                    if(tracks[j+1] == null) {
+                        tracks[j+1] = tracks[j];
+                        tracks[j] = null;
+                    }
+                }
+            }
+
+            tracks[i] = track;
         }
 
         return false;
