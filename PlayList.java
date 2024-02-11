@@ -54,8 +54,7 @@ class PlayList {
         String newStr = "";
         for (int i = 0; i < tracks.length; i++) {
             if (tracks[i] != null) {
-                String a = tracks[i].toString();
-                newStr = newStr + tracks[i].toString() + "\n";
+                newStr = newStr +  "\n" + tracks[i].toString();
             }
         }
 
@@ -123,11 +122,12 @@ class PlayList {
         for(int j = i; j < maxSize; j++) {
             if(tracks[j] == null) {
                 room = true;
+                break;
             }
         }
 
         if (room) {
-            for(int j = tracks.length - 2; j >= i; j++) {
+            for(int j = tracks.length - 2; j >= i; j--) {
                 if(tracks[j] != null) {
                     if(tracks[j+1] == null) {
                         tracks[j+1] = tracks[j];
@@ -137,6 +137,7 @@ class PlayList {
             }
 
             tracks[i] = track;
+            return true;
         }
 
         return false;
@@ -160,7 +161,7 @@ class PlayList {
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) { // arad
         for(int i = 0; i < maxSize; i++) {
-            if(tracks[i].getTitle().equals(title)) {
+            if(tracks[i] != null && tracks[i].getTitle().equals(title)) {
                 tracks[i] = null;
             }
         }
@@ -204,16 +205,34 @@ class PlayList {
             return -1;
         }
 
-        int min = tracks[start].getDuration();
+        int indexOfFirstTrackFrom = firstTrackIndexFrom(start);
+        if(indexOfFirstTrackFrom < 0) {
+            return -1;
+        }
+        int min = tracks[indexOfFirstTrackFrom].getDuration();
+        int minIndex = indexOfFirstTrackFrom;
         int current;
-        for(int i = start + 1; i < maxSize; i++) {
-            current = tracks[i].getDuration();
-            if(min > current) {
-                min = current;
+        for(int i = indexOfFirstTrackFrom + 1; i < maxSize; i++) {
+            if(tracks[i] != null) {
+                current = tracks[i].getDuration();
+                if(min > current) {
+                    min = current;
+                    minIndex = i;
+                }
             }
         }
 
-        return min;
+        return minIndex;
+    }
+
+    private int firstTrackIndexFrom(int startIndex) {
+        for(int i = startIndex; i < maxSize; i++) {
+            if(tracks[i] != null){
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     /** Returns the title of the shortest track in this list. 
@@ -231,6 +250,9 @@ class PlayList {
         int min;
         for(int i = 0; i < maxSize; i++) {
             min = minIndex(i);
+            if(min == -1) {
+                break;
+            }
             temp = this.tracks[i];
             tracks[i] = this.tracks[min];
             this.tracks[min] = temp;
