@@ -38,7 +38,7 @@ class PlayList {
      *  Otherwise, appends the track and returns true. */
     public boolean add(Track track) {
         for (int i = 0; i < tracks.length; i++) {
-            if (tracks[i] != null) {
+            if (tracks[i] == null) {
                 tracks[i] = track;
                 size++;
                 return true;
