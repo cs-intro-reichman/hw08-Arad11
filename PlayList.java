@@ -146,7 +146,7 @@ class PlayList {
     /** Removes the track in the given index from this list.
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
-    public void remove(int i) { // arad
+    public void remove(int i) { // arad - what to return than? void? -1? if an int, what int to return when it has been removed?
         if(i < 0 || i > maxSize || size == 0) {
             return;
         }
@@ -185,6 +185,13 @@ class PlayList {
      *  If the total size of both lists is too large, does nothing. */
     //// An elegant and terribly inefficient implementation.
      public void add(PlayList other) {
+        if (size + other.size <= maxSize) {
+            for(int i = 0; i < other.maxSize; i++) {
+                if(other.tracks[i] != null) {
+                    add(other.tracks[i]);
+                }
+            }
+        }
         if(other.size > this.maxSize) {
             return;
         }
